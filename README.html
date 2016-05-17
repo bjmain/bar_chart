@@ -1,0 +1,39 @@
+# bar_chart
+
+import math
+import matplotlib.pyplot as P
+import numpy
+import sys
+%matplotlib inline
+
+#load data
+data = numpy.loadtxt("site_BM_percent.txt", skiprows = 1, usecols = range(1,7))
+
+
+#import tick labels
+xt = [line.strip().split() for line in open("site_BM.txt") if line.strip().split()[0]=="Site"]
+xt=xt[0][1:7]
+
+
+ind = numpy.arange(6)+ 1  # the x locations for the groups
+
+width = 0.25       # the width of the bars
+
+
+fig, ax = P.subplots(1,1)
+b0 = ax.bar(ind+(1*width), data[0], width, color='k', label="Lupiro N=909")
+b1 = ax.bar(ind+(2*width), data[1], width, color='gray', label="Minepa N=771")
+b2 = ax.bar(ind+(3*width), data[2], width, color='white', label="SAGA N=715")
+
+
+ax.set_xticklabels( xt, fontsize=14, weight='bold',rotation = 0 )
+ax.set_xticks (ind +.5 + width/2.)
+ax.set_ylabel("Proportion Blood Meals",weight='bold',fontsize=14)
+ax.set_yticks([.25,.50,.75])
+
+ax.set_xlim(1,7.25)
+#ax.set_ylim(0,1)
+
+ax.legend()
+P.savefig("site_bm.png")
+P.show()
